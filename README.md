@@ -1,19 +1,20 @@
 # SeaROV
-SeaROV project repository
-members:
-Andrew Webb
-Armando Barron 
-Aidan Dorfler
-Dyuthi Vijay
-Laurena Chen
+# SeaROV project repository
 
+**Members:**
 
+- Andrew Webb
+- Armando Barron
+- Aidan Dorfler
+- Dyuthi Vijay
+- Laurena Chen
 
-goals:
-salt water remotely operated vehicle (ROV)
-underwater exploration of a sight of interest
-deep diving up to 100 ft
-auto position holding option
+**Goals:**
+
+- Salt water remotely operated vehicle (ROV)
+- Underwater exploration of a sight of interest
+- Deep diving up to 100 ft
+- Auto position holding option
 
 
 
