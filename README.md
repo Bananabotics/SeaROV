@@ -15,6 +15,4 @@
 - Underwater exploration of a sight of interest
 - Deep diving up to 100 ft
 - Auto position holding option
-
-
-
+- 4 DOF Arm
