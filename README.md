@@ -23,4 +23,4 @@
 
 **Code Requirements**
 
-- Run 'pip install -r requirements.txt' to install project dependencies
+- Run '''pip install -r requirements.txt''' to install project dependencies
