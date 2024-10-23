@@ -1,11 +1,9 @@
-# SeaROV
+# M.O.L.A. Underwater ROV
 
-**M.O.L.A. Underwater ROV**
-
-- Marine
-- Oceanic
-- Laboratory
-- Assistant
+ **Marine**
+ **Oceanic**
+ **Laboratory**
+ **Assistant**
 
 **Members:**
 
