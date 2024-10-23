@@ -20,3 +20,7 @@
 - Deep diving up to 100 ft
 - Auto position holding option
 - 4 DOF Arm
+
+**Code Requirements**
+
+- Run 'pip install -r requirements.txt' to install project dependencies
