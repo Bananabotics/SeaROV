@@ -1,6 +1,13 @@
 # SeaROV
 # SeaROV project repository
 
+**M.O.L.A. Underwater ROV**
+
+- Marine
+- Oceanic
+- Laboratory
+- Assistant
+
 **Members:**
 
 - Andrew Webb
