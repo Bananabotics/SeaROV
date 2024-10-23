@@ -1,5 +1,4 @@
 # SeaROV
-# SeaROV project repository
 
 **M.O.L.A. Underwater ROV**
 
