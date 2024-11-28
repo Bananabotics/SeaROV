@@ -14,14 +14,16 @@ except IndexError as e:
     exit()
 
 def pilot_logic(controller):
-    left_joystick = controller.left_stick
-    right_joystick = controller.right_stick
-
     '''
-    ROV Layout:
-    \_/  Theta = 32 degrees
-    |:|  The angled brackets represent the     
-    /-\  Thrusters, Theta is with respect to
+    ROV Layout (Rectangular, not square):
+    \__/  Theta = 32 degrees
+    |..|  The angled brackets represent the     
+    /--\  Thrusters, Theta is with respect to
          the vertical axis.
          The dots represent the up/down thrusters
     '''
+    left_joystick = controller.left_stick
+    right_joystick = controller.right_stick
+
+    left_bumper = controller.left_bumper
+    right_bumper = controller.right_bumper

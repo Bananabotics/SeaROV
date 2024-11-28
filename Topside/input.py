@@ -14,8 +14,8 @@ class controller:
         self.y_pressed = 0
         self.select_pressed = 0
         self.start_pressed = 0
-        self.btn_tl = 0
-        self.btn_tr = 0
+        self.left_bumper = 0
+        self.right_bumper = 0
         self.device = inputs.devices.gamepads[index]
         self._thread()
         self.select_toggle = False
@@ -65,10 +65,10 @@ class controller:
                         self.a_pressed = ('1' if event.state == 1 else '0')
                         break
                     case "BTN_TL":
-                        self.btn_tl = ('1' if event.state == 1 else '0')                      
+                        self.left_bumper = ('1' if event.state == 1 else '0')                      
                         break
                     case "BTN_TR":
-                        self.btn_tr = ('1' if event.state == 1 else '0')
+                        self.right_bumper = ('1' if event.state == 1 else '0')
                         break
                     case "ABS_RZ": 
                         self.right_trigger = event.state
