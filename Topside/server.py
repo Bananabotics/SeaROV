@@ -20,7 +20,8 @@ def pilot_logic(controller):
     '''
     ROV Layout:
     \_/  Theta = 32 degrees
-    | |  The angled brackets represent the     
+    |:|  The angled brackets represent the     
     /-\  Thrusters, Theta is with respect to
-    the vertical axis.
+         the vertical axis.
+         The dots represent the up/down thrusters
     '''
