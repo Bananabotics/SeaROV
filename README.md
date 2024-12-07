@@ -16,7 +16,7 @@
 **Goals:**
 
 - Salt water remotely operated vehicle (ROV)
-- Underwater exploration of a sight of interest
+- Underwater exploration of a site of interest
 - Deep diving up to 100 ft
 - Auto position holding option
 - 4 DOF Arm
