@@ -1,29 +1,108 @@
-from input import controller
+from math import radians, cos, sin
 import time
-import requests
+from input import controller
 
+ANGLE_DEG = 32
+ANGLE_RAD = radians(ANGLE_DEG)
+CY = cos(ANGLE_RAD)
+SX = sin(ANGLE_RAD)
 
+NEUTRAL = 1500
+RANGE = 500
+
+pilot_index = 0
+operator_index = 1
 
 try:
-    pilot_index = 0
-    operator_index = 1
     pilot = controller(pilot_index)
     operator = controller(operator_index)
 except IndexError as e:
-    print("Error: Controllers Not Found")
+    print(f"Error: No controller found.{e}")
     exit()
+    
+def map_to_thrust(value):
+    # value in [-1,1] -> 1000 to 2000
+    return NEUTRAL + int(value * RANGE)
 
 def pilot_logic(controller):
     '''
     ROV Layout (Rectangular, not square):
-    \__/  Theta = 32 degrees
-    |..|  The angled brackets represent the     
-    /--\  Thrusters, Theta is with respect to
-         the vertical axis.
-         The dots represent the up/down thrusters
+   t1   t2
+    \__/     Theta = 32 degrees (with respect to the vertical axis)
+    |..|     The angled brackets represent the     
+    /--\     Thrusters, Theta is with respect to
+   t3   t4   the vertical axis.
+             The dots represent the up/down thrusters
+        Speeds:
+            Neutral - 1500 ms
+            Full Forward - 2000 ms
+            Full Reverse - 1000 ms
     '''
-    left_joystick = controller.left_stick
-    right_joystick = controller.right_stick
+    # Get joystick values
+    lx, ly = controller.left_stick   # left stick X,Y in [-1,1]
+    rx, ry = controller.right_stick  # right stick X,Y in [-1,1]
 
-    left_bumper = controller.left_bumper
-    right_bumper = controller.right_bumper
+    # Get triggers and bumpers
+    lt = controller.left_trigger / 255.0
+    rt = controller.right_trigger / 255.0
+    lb = 1 if controller.left_bumper == '1' else 0
+    rb = 1 if controller.right_bumper == '1' else 0
+
+    # Solve for horizontal thrusts (X, Y)
+    # Avoid division by zero if angle is off:
+    if abs(CY) < 1e-6 or abs(SX) < 1e-6:
+        T1 = T2 = T3 = T4 = 0.0
+    else:
+        A = ly / (2 * CY)
+        B = lx / (2 * SX)
+
+        T1 = (A - B) / 2
+        T2 = (A + B) / 2
+        T3 = T1
+        T4 = T2
+
+    # Yaw from right stick X (rx):
+    YAW_SCALE = 0.2
+    T1 -= rx * YAW_SCALE
+    T3 -= rx * YAW_SCALE
+    T2 += rx * YAW_SCALE
+    T4 += rx * YAW_SCALE
+
+    # Roll from triggers:
+    Roll_input = rt - lt  # in [-1,1]
+    ROLL_SCALE = 0.3
+    Tz1_roll = -Roll_input * ROLL_SCALE
+    Tz2_roll =  Roll_input * ROLL_SCALE
+
+    # Vertical from bumpers:
+    vertical_input = rb - lb
+    VERT_SCALE = 1.0
+    Tz_base = vertical_input * VERT_SCALE
+
+    # Combine vertical and roll:
+    Tz1 = Tz_base + Tz1_roll
+    Tz2 = Tz_base + Tz2_roll
+
+    # Map to servo commands (1000-2000 µs)
+    t1_cmd = map_to_thrust(T1)
+    t2_cmd = map_to_thrust(T2)
+    t3_cmd = map_to_thrust(T3)
+    t4_cmd = map_to_thrust(T4)
+    tz1_cmd = map_to_thrust(Tz1)
+    tz2_cmd = map_to_thrust(Tz2)
+
+    payload = {
+        "t1": t1_cmd,
+        "t2": t2_cmd,
+        "t3": t3_cmd,
+        "t4": t4_cmd,
+        "tz1": tz1_cmd,
+        "tz2": tz2_cmd
+    }
+    packet = ",".join([f"{v}" for k, v in payload.items()])
+    return packet
+
+
+while True:
+    pilot_logic(pilot)
+    time.sleep(0.05)
