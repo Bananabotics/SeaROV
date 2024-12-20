@@ -1,3 +1,4 @@
+import socket
 from math import radians, cos, sin
 import time
 from input import controller
@@ -17,9 +18,9 @@ try:
     pilot = controller(pilot_index)
     operator = controller(operator_index)
 except IndexError as e:
-    print(f"Error: No controller found.{e}")
+    print(f"Error: No controller found. {e}")
     exit()
-    
+
 def map_to_thrust(value):
     # value in [-1,1] -> 1000 to 2000
     return NEUTRAL + int(value * RANGE)
@@ -94,7 +95,14 @@ def pilot_logic(controller):
     packet = ",".join(f"{cmd}" for cmd in [t1_cmd, t2_cmd, t3_cmd, t4_cmd, tz1_cmd, tz2_cmd])
     return packet
 
+# Set up UDP socket
+UDP_IP = "192.168.1.1"  # Replace with the IP address of the receiver
+UDP_PORT = 5005         # Replace with the port number of the receiver
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 while True:
-    pilot_logic(pilot)
+    packet = pilot_logic(pilot)
+    print(packet)
+    sock.sendto(packet.encode(), (UDP_IP, UDP_PORT))
     time.sleep(0.05)
