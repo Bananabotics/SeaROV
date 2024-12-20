@@ -11,6 +11,11 @@ pilot_index = 0
 operator_index = 1
 #**********************************#
 
+# Speed Constants (In percentage, ex: 0.5 = 50%)
+#**********************************#'''
+ROV_Speed = 1.0
+#**********************************#
+
 #Network Constants
 #**********************************#
 UDP_IP = "192.168.1.177" # Replace with the IP address of the receiver
@@ -25,7 +30,7 @@ CY = cos(ANGLE_RAD)
 SX = sin(ANGLE_RAD)
 
 NEUTRAL = 1500
-RANGE = 500
+RANGE = 500 * ROV_Speed
 #**********************************#
 
 '''
