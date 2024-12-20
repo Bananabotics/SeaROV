@@ -105,4 +105,13 @@ while True:
     packet = pilot_logic(pilot)
     print(packet)
     sock.sendto(packet.encode(), (UDP_IP, UDP_PORT))
+    
+    # Receive response from the client
+    try:
+        sock.settimeout(1.0)  # Set timeout for receiving response
+        response, addr = sock.recvfrom(1024)  # Buffer size is 1024 bytes
+        print(f"Received response: {response.decode()}")
+    except socket.timeout:
+        print("No response received.")
+    
     time.sleep(0.05)
