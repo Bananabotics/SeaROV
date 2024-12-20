@@ -23,4 +23,8 @@
 
 **Code Requirements**
 
-- Run `pip install -r requirements.txt` to install project dependencies
+- Run `pip install -r requirements.txt` to install python project dependencies
+- Run `sudo apt-get install libboost-all-dev` on Raspberry Pi for CPP project dependencies
+
+**In Case of Arduino Usage:**
+- Install the platformIO extension on VSCode, or convert files in ./Mola/Mola_arduino from .cpp to .ino and use the arduino IDE.

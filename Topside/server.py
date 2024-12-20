@@ -33,7 +33,7 @@ def pilot_logic(controller):
     |..|     The angled brackets represent the     
     /--\     Thrusters, Theta is with respect to
    t3   t4   the vertical axis.
-             The dots represent the up/down thrusters
+             The dots represent the up/down thrusters (tz1, tz2)
         Speeds:
             Neutral - 1500 ms
             Full Forward - 2000 ms
@@ -96,8 +96,8 @@ def pilot_logic(controller):
     return packet
 
 # Set up UDP socket
-UDP_IP = "192.168.1.1"  # Replace with the IP address of the receiver
-UDP_PORT = 5005         # Replace with the port number of the receiver
+UDP_IP = "192.168.1.177"  # Replace with the IP address of the receiver
+UDP_PORT = 8888         # Replace with the port number of the receiver
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
