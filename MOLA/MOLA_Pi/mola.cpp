@@ -32,7 +32,6 @@ int main() {
             std::cout << "Received packet: " << packetBuffer << std::endl;
 
             // Process the packet
-            // Assuming the packet contains comma-separated values
             char* token = strtok(packetBuffer, ",");
             int values[6];
             int index = 0;
@@ -67,3 +66,6 @@ int main() {
 
     return 0;
 }
+// Add code to send a response back to the sender
+std::string response = "Packet received";
+socket.send_to(boost::asio::buffer(response), remote_endpoint);
