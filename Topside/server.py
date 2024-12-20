@@ -91,15 +91,7 @@ def pilot_logic(controller):
     tz1_cmd = map_to_thrust(Tz1)
     tz2_cmd = map_to_thrust(Tz2)
 
-    payload = {
-        "t1": t1_cmd,
-        "t2": t2_cmd,
-        "t3": t3_cmd,
-        "t4": t4_cmd,
-        "tz1": tz1_cmd,
-        "tz2": tz2_cmd
-    }
-    packet = ",".join([f"{v}" for k, v in payload.items()])
+    packet = ",".join(f"{cmd}" for cmd in [t1_cmd, t2_cmd, t3_cmd, t4_cmd, tz1_cmd, tz2_cmd])
     return packet
 
 
