@@ -41,7 +41,7 @@ def pilot_logic(controller):
     '''
     # Get joystick values
     lx, ly = controller.left_stick   # left stick X,Y in [-1,1]
-    rx, ry = controller.right_stick  # right stick X,Y in [-1,1]
+    rx, _ = controller.right_stick  # right stick X,Y in [-1,1]
 
     # Get triggers and bumpers
     lt = controller.left_trigger / 255.0
@@ -70,27 +70,27 @@ def pilot_logic(controller):
     T4 += rx * YAW_SCALE
 
     # Roll from triggers:
-    Roll_input = rt - lt  # in [-1,1]
+    roll_input = rt - lt  # in [-1,1]
     ROLL_SCALE = 0.3
-    Tz1_roll = -Roll_input * ROLL_SCALE
-    Tz2_roll =  Roll_input * ROLL_SCALE
+    tz1_roll = -roll_input * ROLL_SCALE
+    tz2_roll =  roll_input * ROLL_SCALE
 
     # Vertical from bumpers:
     vertical_input = rb - lb
     VERT_SCALE = 1.0
-    Tz_base = vertical_input * VERT_SCALE
+    tz_base = vertical_input * VERT_SCALE
 
     # Combine vertical and roll:
-    Tz1 = Tz_base + Tz1_roll
-    Tz2 = Tz_base + Tz2_roll
+    tz1 = tz_base + tz1_roll
+    tz2 = tz_base + tz2_roll
 
     # Map to servo commands (1000-2000 µs)
     t1_cmd = map_to_thrust(T1)
     t2_cmd = map_to_thrust(T2)
     t3_cmd = map_to_thrust(T3)
     t4_cmd = map_to_thrust(T4)
-    tz1_cmd = map_to_thrust(Tz1)
-    tz2_cmd = map_to_thrust(Tz2)
+    tz1_cmd = map_to_thrust(tz1)
+    tz2_cmd = map_to_thrust(tz2)
 
     packet = ",".join(f"{cmd}" for cmd in [t1_cmd, t2_cmd, t3_cmd, t4_cmd, tz1_cmd, tz2_cmd])
     return packet
